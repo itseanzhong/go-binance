@@ -1244,12 +1244,19 @@ func (s *GetAllMarginAssetsService) Do(ctx context.Context, opts ...RequestOptio
 }
 
 type GetAvailableInventoryService struct {
-	c *Client
+	c   *Client
+	typ string
 }
 
 type AvailableInventory struct {
 	Assets     map[string]string `json:"assets"`
 	UpdateTime int64             `json:"updateTime"`
+}
+
+// Type set type
+func (s *GetAvailableInventoryService) Type(typ string) *GetAvailableInventoryService {
+	s.typ = typ
+	return s
 }
 
 // Do send request
@@ -1272,14 +1279,7 @@ func (s *GetAvailableInventoryService) Do(ctx context.Context, opts ...RequestOp
 
 // GetIsolatedMarginAllPairsService get isolated margin pair info
 type GetIsolatedMarginAllPairsService struct {
-	c   *Client
-	typ string
-}
-
-// Type set type
-func (s *GetIsolatedMarginAllPairsService) Type(typ string) *GetIsolatedMarginAllPairsService {
-	s.typ = typ
-	return s
+	c *Client
 }
 
 // Do send request
