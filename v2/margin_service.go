@@ -1266,6 +1266,9 @@ func (s *GetAvailableInventoryService) Do(ctx context.Context, opts ...RequestOp
 		endpoint: "/sapi/v1/margin/available-inventory",
 		secType:  secTypeAPIKey,
 	}
+	if s.typ != "" {
+		r.setParam("type", s.typ)
+	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return res, err
@@ -1288,9 +1291,6 @@ func (s *GetIsolatedMarginAllPairsService) Do(ctx context.Context, opts ...Reque
 		method:   http.MethodGet,
 		endpoint: "/sapi/v1/margin/isolated/allPairs",
 		secType:  secTypeAPIKey,
-	}
-	if s.typ != "" {
-		r.setParam("type", s.typ)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
