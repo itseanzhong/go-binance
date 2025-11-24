@@ -1243,6 +1243,33 @@ func (s *GetAllMarginAssetsService) Do(ctx context.Context, opts ...RequestOptio
 	return res, nil
 }
 
+type GetAvailableInventoryService struct {
+	c *Client
+}
+
+type AvailableInventory struct {
+	Assets     map[string]string `json:"assets"`
+	UpdateTime int64             `json:"updateTime"`
+}
+
+// Do send request
+func (s *GetAvailableInventoryService) Do(ctx context.Context, opts ...RequestOption) (res *AvailableInventory, err error) {
+	r := &request{
+		method:   "GET",
+		endpoint: "/sapi/v1/margin/available-inventory",
+		secType:  secTypeAPIKey,
+	}
+	data, err := s.c.callAPI(ctx, r, opts...)
+	if err != nil {
+		return res, err
+	}
+	err = json.Unmarshal(data, res)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+}
+
 // GetIsolatedMarginAllPairsService get isolated margin pair info
 type GetIsolatedMarginAllPairsService struct {
 	c *Client
