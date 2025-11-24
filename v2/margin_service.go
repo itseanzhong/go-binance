@@ -1272,7 +1272,14 @@ func (s *GetAvailableInventoryService) Do(ctx context.Context, opts ...RequestOp
 
 // GetIsolatedMarginAllPairsService get isolated margin pair info
 type GetIsolatedMarginAllPairsService struct {
-	c *Client
+	c   *Client
+	typ string
+}
+
+// Type set type
+func (s *GetIsolatedMarginAllPairsService) Type(typ string) *GetIsolatedMarginAllPairsService {
+	s.typ = typ
+	return s
 }
 
 // Do send request
@@ -1281,6 +1288,9 @@ func (s *GetIsolatedMarginAllPairsService) Do(ctx context.Context, opts ...Reque
 		method:   http.MethodGet,
 		endpoint: "/sapi/v1/margin/isolated/allPairs",
 		secType:  secTypeAPIKey,
+	}
+	if s.typ != "" {
+		r.setParam("type", s.typ)
 	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
